@@ -28,7 +28,8 @@ class StyleTransfer:
         """
         content_image = self.__img_to_tensor(content_image, scaler)
         style_image = self.__img_to_tensor(style_image, scaler)
-        stylized_image = self.model(content_image, style_image)[0]
+        with tf.device('/cpu:0'):
+            stylized_image = self.model(content_image, style_image)[0]
         return self.__tensor_to_image(stylized_image)
 
     def __img_to_tensor(self, img, max_dim):
